@@ -70,3 +70,14 @@ class ProcurementOrder(models.Model):
         res = _super._prepare_orderpoint_procurement(orderpoint, product_qty)
         res.update({'partner_dest_id': orderpoint.warehouse_id.partner_id.id})
         return res
+
+
+class ProcurementRule(models.Model):
+    _inherit = 'procurement.rule'
+
+    delivery_address_id = fields.Many2one(
+        'res.partner',
+        'Delivery Address',
+        help='The final delivery address of the procurement group'
+    )
+

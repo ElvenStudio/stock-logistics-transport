@@ -64,6 +64,11 @@ class StockMove(models.Model):
                     # group
                     origin_address = group.origin_address_id
                 changes['origin_address_id'] = origin_address.id
+            procurement_rule = picking.move_lines.mapped('rule_id')
+
+            if len(procurement_rule) == 1 and procurement_rule.delivery_address_id:
+                changes['delivery_address_id'] = procurement_rule.delivery_address_id.id
+
             picking.write(changes)
         return res
 
